@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>АвтоВыбор НН — Бриф на подбор автомобиля</title>
+
+    <style>
+
+        * {
+
+            margin: 0;
+
+            padding: 0;
+
+            box-sizing: border-box;
+
+        }
+
+
+        body {
+
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+
+            min-height: 100vh;
+
+            padding: 20px;
+
+        }
+
+
+        .container {
+
+            max-width: 700px;
+
+            margin: 0 auto;
+
+            background: white;
+
+            border-radius: 20px;
+
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+
+            overflow: hidden;
+
+        }
+
+
+        .header {
+
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+
+            color: white;
+
+            padding: 40px 30px;
+
+            text-align: center;
+
+            position: relative;
+
+            overflow: hidden;
+
+        }
+
+
+        .header::before {
+
+            content: '';
+
+            position: absolute;
+
+            top: -50%;
+
+            left: -50%;
+
+            width: 200%;
+
+            height: 200%;
+
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="3" fill="rgba(255,255,255,0.08)"/><circle cx="40" cy="80" r="2" fill="rgba(255,255,255,0.12)"/></svg>') repeat;
+
+            animation: drift 25s infinite linear;
+
+        }
+
+
+        @keyframes drift {
+
+            0% { transform: translate(0, 0); }
+
+            100% { transform: translate(-50px, -50px); }
+
+        }
+
+
+        .header h1 {
+
+            font-size: 2.2rem;
+
+            margin-bottom: 5px;
+
+            position: relative;
+
+            z-index: 1;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 15px;
+
+        }
+
+
+        .car-icon {
+
+            font-size: 2.5rem;
+
+            animation: bounce 2s infinite;
+
+        }
+
+
+        @keyframes bounce {
+
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+
+            40% { transform: translateY(-10px); }
+
+            60% { transform: translateY(-5px); }
+
+        }
+
+
+        .header p {
+
+            font-size: 1.1rem;
+
+            opacity: 0.95;
+
+            position: relative;
+
+            z-index: 1;
+
+            line-height: 1.5;
+
+            margin-top: 10px;
+
+        }
+
+
+        .form-content {
+
+            padding: 40px 30px;
+
+        }
+
+
+        .section {
+
+            margin-bottom: 35px;
+
+            padding: 25px;
+
+            background: linear-gradient(145deg, #f8f9ff, #e8f2ff);
+
+            border-radius: 15px;
+
+            border-left: 4px solid #2a5298;
+
+            transition: all 0.3s ease;
+
+        }
+
+
+        .section:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow: 0 8px 25px rgba(42, 82, 152, 0.15);
+
+        }
+
+
+        .section h2 {
+
+            color: #1e3c72;
+
+            font-size: 1.4rem;
+
+            margin-bottom: 20px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+        }
+
+
+        .section-icon {
+
+            width: 28px;
+
+            height: 28px;
+
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+        }
+
+
+        .form-group {
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .form-row {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 15px;
+
+        }
+
+
+        label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-weight: 600;
+
+            color: #333;
+
+            font-size: 0.95rem;
+
+        }
+
+
+        .required {
+
+            color: #e74c3c;
+
+            margin-left: 3px;
+
+        }
+
+
+        input[type="text"],
+
+        input[type="email"],
+
+        input[type="tel"],
+
+        input[type="number"],
+
+        textarea,
+
+        select {
+
+            width: 100%;
+
+            padding: 12px 15px;
+
+            border: 2px solid #e1e8ed;
+
+            border-radius: 8px;
+
+            font-size: 1rem;
+
+            transition: all 0.3s ease;
+
+            background: white;
+
+            font-family: inherit;
+
+        }
+
+
+        input:focus,
+
+        textarea:focus,
+
+        select:focus {
+
+            outline: none;
+
+            border-color: #2a5298;
+
+            box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+
+            transform: translateY(-1px);
+
+        }
+
+
+        textarea {
+
+            min-height: 100px;
+
+            resize: vertical;
+
+        }
+
+
+        select {
+
+            cursor: pointer;
+
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%232a5298" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>');
+
+            background-repeat: no-repeat;
+
+            background-position: right 12px center;
+
+            background-size: 16px;
+
+            appearance: none;
+
+        }
+
+
+        .radio-group {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 12px;
+
+        }
+
+
+        .radio-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 8px 12px;
+
+            border: 2px solid #e1e8ed;
+
+            border-radius: 20px;
+
+            cursor: pointer;
+
+            transition: all 0.3s ease;
+
+            font-size: 0.9rem;
+
+        }
+
+
+        .radio-item:hover {
+
+            background: #f0f4ff;
+
+            border-color: #2a5298;
+
+        }
+
+
+        .radio-item input[type="radio"] {
+
+            width: 16px;
+
+            height: 16px;
+
+            accent-color: #2a5298;
+
+        }
+
+
+        .radio-item input[type="radio"]:checked + label {
+
+            color: #1e3c72;
+
+            font-weight: 600;
+
+        }
+
+
+        .actions {
+
+            padding: 30px;
+
+            background: linear-gradient(145deg, #f8f9ff, #e8f2ff);
+
+            display: flex;
+
+            gap: 15px;
+
+            justify-content: center;
+
+            flex-wrap: wrap;
+
+        }
+
+
+        .btn {
+
+            padding: 15px 25px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            font-size: 1rem;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: all 0.3s ease;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            min-width: 140px;
+
+            justify-content: center;
+
+        }
+
+
+        .btn-primary {
+
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+
+            color: white;
+
+        }
+
+
+        .btn-secondary {
+
+            background: white;
+
+            color: #2a5298;
+
+            border: 2px solid #2a5298;
+
+        }
+
+
+        .btn:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+
+        }
+
+
+        .btn-primary:hover {
+
+            background: linear-gradient(135deg, #1a3464, #25478a);
+
+        }
+
+
+        .validation-error {
+
+            color: #e74c3c;
+
+            font-size: 0.85rem;
+
+            margin-top: 5px;
+
+            display: none;
+
+        }
+
+
+        .budget-input {
+
+            position: relative;
+
+        }
+
+
+        .budget-input::after {
+
+            content: '₽';
+
+            position: absolute;
+
+            right: 15px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #666;
+
+            pointer-events: none;
+
+        }
+
+
+        .budget-input input {
+
+            padding-right: 35px;
+
+        }
+
+
+        @media (max-width: 768px) {
+
+            .container {
+
+                margin: 10px;
+
+                border-radius: 15px;
+
+            }
+
+           
+
+            .header {
+
+                padding: 30px 20px;
+
+            }
+
+           
+
+            .header h1 {
+
+                font-size: 1.8rem;
+
+                flex-direction: column;
+
+                gap: 10px;
+
+            }
+
+           
+
+            .form-content {
+
+                padding: 30px 20px;
+
+            }
+
+           
+
+            .section {
+
+                padding: 20px;
+
+            }
+
+
+            .form-row {
+
+                grid-template-columns: 1fr;
+
+            }
+
+           
+
+            .actions {
+
+                padding: 20px;
+
+                flex-direction: column;
+
+            }
+
+           
+
+            .btn {
+
+                width: 100%;
+
+            }
+
+
+            .radio-group {
+
+                flex-direction: column;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="header">
+
+            <h1>
+
+                <span class="car-icon">🚗</span>
+
+                АвтоВыбор НН
+
+            </h1>
+
+            <p>Пожалуйста, заполните форму для точного подбора подержанного авто.<br>Чем подробнее, тем лучше результат.</p>
+
+        </div>
+
+
+        <form class="form-content" id="autoSelectionBrief" method="POST" action="https://formspree.io/f/xzzabjgw">
+
+            <div class="section">
+
+                <h2><span class="section-icon">👤</span>Контактная информация</h2>
+
+               
+
+                <div class="form-group">
+
+                    <label for="client-name">Имя клиента<span class="required">*</span></label>
+
+                    <input type="text" id="client-name" name="Имя клиента" required placeholder="Введите ваше имя">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="phone">Контактный телефон<span class="required">*</span></label>
+
+                    <input type="tel" id="phone" name="Телефон" required placeholder="+7 (___) ___-__-__">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="email">Email</label>
+
+                    <input type="email" id="email" name="Email" placeholder="your@email.com">
+
+                </div>
+
+            </div>
+
+
+            <div class="section">
+
+                <h2><span class="section-icon">💰</span>Бюджет и регион</h2>
+
+
+                <div class="form-group">
+
+                    <label for="budget">Бюджет на авто (руб)<span class="required">*</span></label>
+
+                    <div class="budget-input">
+
+                        <input type="number" id="budget" name="Бюджет" required placeholder="Например: 800000" min="0">
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="region">Регион или город поиска<span class="required">*</span></label>
+
+                    <select id="region" name="Регион поиска" required>
+
+                        <option value="">Выберите регион</option>
+
+                        <option value="Нижний Новгород">Нижний Новгород</option>
+
+                        <option value="Москва">Москва</option>
+
+                        <option value="Московская область">Московская область</option>
+
+                        <option value="Санкт-Петербург">Санкт-Петербург</option>
+
+                        <option value="Ленинградская область">Ленинградская область</option>
+
+                        <option value="Казань">Казань</option>
+
+                        <option value="Екатеринбург">Екатеринбург</option>
+
+                        <option value="Новосибирск">Новосибирск</option>
+
+                        <option value="Краснодар">Краснодар</option>
+
+                        <option value="Челябинск">Челябинск</option>
+
+                        <option value="Самара">Самара</option>
+
+                        <option value="Ростов-на-Дону">Ростов-на-Дону</option>
+
+                        <option value="Уфа">Уфа</option>
+
+                        <option value="Волгоград">Волгоград</option>
+
+                        <option value="Пермь">Пермь</option>
+
+                        <option value="Воронеж">Воронеж</option>
+
+                        <option value="Другой">Другой регион</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="section">
+
+                <h2><span class="section-icon">🔧</span>Параметры автомобиля</h2>
+
+
+                <div class="form-group">
+
+                    <label for="brand-model">Марка и модель</label>
+
+                    <input type="text" id="brand-model" name="Марка и модель" placeholder="Например: Toyota Camry, BMW X5, или оставьте пустым">
+
+                </div>
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="year-from">Год выпуска: от<span class="required">*</span></label>
+
+                        <input type="number" id="year-from" name="Год от" required min="1990" max="2025" placeholder="2015">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="year-to">Год выпуска: до<span class="required">*</span></label>
+
+                        <input type="number" id="year-to" name="Год до" required min="1990" max="2025" placeholder="2023">
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Тип кузова<span class="required">*</span></label>
+
+                    <div class="radio-group">
+
+                        <div class="radio-item">
+
+                            <input type="radio" id="body-sedan" name="Тип кузова" value="седан" required>
+
+                            <label for="body-sedan">Седан</label>
+
+                        </div>
+
+                        <div class="radio-item">
+
+                            <input type="radio" id="body-hatchback" name="Тип кузова" value="хэтчбек" required>
+
+                            <label for="body-hatchback">Хэтчбек</label>
+
+                        </div>
+
+                        <div class="radio-item">
+
+                            <input type="radio" id="body-wagon" name="Тип кузова" value="универсал" required>
+
+                            <label for="body-wagon">Универсал</label>
+
+                        </div>
+
+                        <div class="radio-item">
+
+                            <input type="radio" id="body-suv" name="Тип кузова" value="внедорожник" required>
+
+                            <label for="body-suv">Внедорожник</label>
+
+                        </div>
+
+                        <div class="radio-item">
+
+                            <input type="radio" id="body-coupe" name="Тип кузова" value="купе" required>
+
+                            <label for="body-coupe">Купе</label>
+
+                        </div>
+
+                        <div class="radio-item">
+
+                            <input type="radio" id="body-any" name="Тип кузова" value="не важно" required>
+
+                            <label for="body-any">Не важно</label>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Тип коробки передач<span class="required">*</span></label>
+
+                    <div class="radio-group">
+
+                        <div class="radio-item">
+
+                            <input type="radio" id="transmission-auto" name="КПП" value="автомат" required>
+
+                            <label for="transmission-auto">Автомат</label>
+
+                        </div>
+
+                        <div class="radio-item">
+
+                            <input type="radio" id="transmission-manual" name="КПП" value="механика" required>
+
+                            <label for="transmission-manual">Механика</label>
+
+                        </div>
+
+                        <div class="radio-item">
+
+                            <input type="radio" id="transmission-any" name="КПП" value="не важно" required>
+
+                            <label for="transmission-any">Не важно</label>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Тип двигателя<span class="required">*</span></label>
+
+                    <div class="radio-group">
+
+                        <div class="radio-item">
+
+                            <input type="radio" id="engine-gasoline" name="Тип двигателя" value="бензин" required>
+
+                            <label for="engine-gasoline">Бензин</label>
+
+                        </div>
+
+                        <div class="radio-item">
+
+                            <input type="radio" id="engine-diesel" name="Тип двигателя" value="дизель" required>
+
+                            <label for="engine-diesel">Дизель</label>
+
+                        </div>
+
+                        <div class="radio-item">
+
+                            <input type="radio" id="engine-hybrid" name="Тип двигателя" value="гибрид" required>
+
+                            <label for="engine-hybrid">Гибрид</label>
+
+                        </div>
+
+                        <div class="radio-item">
+
+                            <input type="radio" id="engine-electric" name="Тип двигателя" value="электро" required>
+
+                            <label for="engine-electric">Электро</label>
+
+                        </div>
+
+                        <div class="radio-item">
+
+                            <input type="radio" id="engine-any" name="Тип двигателя" value="не важно" required>
+
+                            <label for="engine-any">Не важно</label>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="engine-volume">Объем двигателя (л)</label>
+
+                        <input type="number" id="engine-volume" name="Объем двигателя" step="0.1" min="0.5" max="8.0" placeholder="Например: 2.0">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="max-mileage">Максимальный пробег (км)<span class="required">*</span></label>
+
+                        <input type="number" id="max-mileage" name="Макс. пробег" required min="0" placeholder="Например: 150000">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="section">
+
+                <h2><span class="section-icon">💭</span>Дополнительные пожелания</h2>
+
+
+                <div class="form-group">
+
+                    <label for="additional-wishes">Дополнительные пожелания</label>
+
+                    <textarea id="additional-wishes" name="Доп. пожелания" placeholder="Укажите любые дополнительные требования: цвет, комплектация, состояние, документы, история обслуживания, наличие дополнительного оборудования и т.д."></textarea>
+
+                </div>
+
+            </div>
+
+        </form>
+
+
+        <div class="actions">
+
+            <button type="button" class="btn btn-secondary" onclick="saveBrief()">
+
+                💾 Сохранить бриф
+
+            </button>
+
+            <button type="submit" form="autoSelectionBrief" class="btn btn-primary">
+
+                🚗 Подобрать авто
+
+            </button>
+
+            <button type="button" class="btn btn-secondary" onclick="printBrief()">
+
+                🖨️ Печать
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        // Форматирование номера телефона
+
+        document.getElementById('phone').addEventListener('input', function(e) {
+
+            let value = e.target.value.replace(/\D/g, '');
+
+            if (value.startsWith('8')) value = '7' + value.slice(1);
+
+            if (value.startsWith('7')) {
+
+                value = value.slice(0, 11);
+
+                const formatted = value.replace(/^7(\d{3})(\d{3})(\d{2})(\d{2})$/, '+7 ($1) $2-$3-$4');
+
+                if (formatted.includes('(') && formatted.includes(')')) {
+
+                    e.target.value = formatted;
+
+                }
+
+            }
+
+        });
+
+
+        // Валидация года
+
+        document.getElementById('year-from').addEventListener('change', function() {
+
+            const yearTo = document.getElementById('year-to');
+
+            if (yearTo.value && parseInt(this.value) > parseInt(yearTo.value)) {
+
+                yearTo.value = this.value;
+
+            }
+
+        });
+
+
+        document.getElementById('year-to').addEventListener('change', function() {
+
+            const yearFrom = document.getElementById('year-from');
+
+            if (yearFrom.value && parseInt(this.value) < parseInt(yearFrom.value)) {
+
+                yearFrom.value = this.value;
+
+            }
+
+        });
+
+
+        function saveBrief() {
+
+            const formData = new FormData(document.getElementById('autoSelectionBrief'));
+
+            const briefData = {};
+
+           
+
+            for (let [key, value] of formData.entries()) {
+
+                briefData[key] = value;
+
+            }
+
+           
+
+            const briefText = generateBriefText(briefData);
+
+            const blob = new Blob([briefText], { type: 'text/plain;charset=utf-8' });
+
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+
+            a.href = url;
+
+            a.download = `auto_brief_${briefData['Имя клиента'] || 'client'}_${new Date().toISOString().split('T')[0]}.txt`;
+
+            document.body.appendChild(a);
+
+            a.click();
+
+            document.body.removeChild(a);
+
+            URL.revokeObjectURL(url);
+
+           
+
+            alert('Бриф сохранен как файл!');
+
+        }
+
+       
+
+        function printBrief() {
+
+            window.print();
+
+        }
+
+       
+
+        function generateBriefText(data) {
+
+            let text = "АВТОВЫБОР НН — БРИФ НА ПОДБОР АВТОМОБИЛЯ\n";
+
+            text += "=============================================\n\n";
+
+           
+
+            text += "КОНТАКТНАЯ ИНФОРМАЦИЯ:\n";
+
+            text += "Имя клиента: " + (data['Имя клиента'] || '') + "\n";
+
+            text += "Телефон: " + (data.Телефон || '') + "\n";
+
+            text += "Email: " + (data.Email || 'не указан') + "\n\n";
+
+           
+
+            text += "БЮДЖЕТ И РЕГИОН:\n";
+
+            text += "Бюджет: " + (data.Бюджет ? Number(data.Бюджет).toLocaleString('ru-RU') + ' руб.' : '') + "\n";
+
+            text += "Регион поиска: " + (data['Регион поиска'] || '') + "\n\n";
+
+           
+
+            text += "ПАРАМЕТРЫ АВТОМОБИЛЯ:\n";
+
+            text += "Марка и модель: " + (data['Марка и модель'] || 'не указана') + "\n";
+
+            text += "Год выпуска: с " + (data['Год от'] || '') + " по " + (data['Год до'] || '') + "\n";
+
+            text += "Тип кузова: " + (data['Тип кузова'] || '') + "\n";
+
+            text += "Коробка передач: " + (data.КПП || '') + "\n";
+
+            text += "Тип двигателя: " + (data['Тип двигателя'] || '') + "\n";
+
+            text += "Объем двигателя: " + (data['Объем двигателя'] ? data['Объем двигателя'] + ' л' : 'не указан') + "\n";
+
+            text += "Максимальный пробег: " + (data['Макс. пробег'] ? Number(data['Макс. пробег']).toLocaleString('ru-RU') + ' км' : '') + "\n\n";
+
+           
+
+            text += "ДОПОЛНИТЕЛЬНЫЕ ПОЖЕЛАНИЯ:\n";
+
+            text += (data['Доп. пожелания'] || 'не указаны') + "\n\n";
+
+           
+
+            text += "Дата подачи заявки: " + new Date().toLocaleDateString('ru-RU') + " " + new Date().toLocaleTimeString('ru-RU') + "\n";
+
+           
+
+            return text;
+
+        }
+
+    </script>
+
+</body>
+
+</html>
